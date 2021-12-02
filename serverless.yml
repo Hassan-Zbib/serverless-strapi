@@ -20,18 +20,18 @@ provider:
     ADMIN_JWT_SECRET: 9e0538f1-6585-4ffa-a690-053b5e13b958 # for future change for .env with a costume plugin
 
 package:
-  individually: false
-  excludeDevDependencies: true
+  individually: true
+  excludeDevDependencies: false
   exclude:
-    - ./**
-  include:
-    - node_modules/**
-    - api/**
-    - config/**
-    - extensions/**
-    - plugins/**
-    - package.json
-    - app.js
+    - build/**
+#  include:
+#    - node_modules/**
+#    - api/**
+#    - config/**
+#    - extensions/**
+#    - plugins/**
+#    - package.json
+#    - app.js
 
 functions:
   api:
@@ -49,6 +49,12 @@ functions:
           cors: true
 
 plugins:
+#  - serverless-webpack
   - serverless-offline
-  - serverless-bundle  # webpack package deployment
+#  - serverless-bundle  # another webpack package
   - serverless-deployment-bucket
+
+#custom:
+#  webpack:
+#    webpackConfig: 'webpack.config.js'
+#    packager: 'npm'

@@ -9,7 +9,7 @@
   // serverless strapi server config
 
 module.exports = ({ env }) => {
-  let url = "https://kuv4305kra.execute-api.us-west-2.amazonaws.com/dev/"; //set after first deploy then deploy again or use default domain
+  let url = "https://kuv4305kra.execute-api.us-west-2.amazonaws.com/dev"; //set after first deploy then deploy again or use default domain
 
   // Check if running in serverless-offline
   if (env("IS_OFFLINE", null) === "true") {
