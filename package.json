@@ -6,14 +6,23 @@
   "scripts": {
     "develop": "strapi develop",
     "start": "strapi start",
-    "build": "strapi build",
-    "strapi": "strapi"
+    "ui": "serve",
+    "build": "./scripts/pre-build.sh && strapi build && ./scripts/post-build.sh",
+    "strapi": "strapi",
+    "deploy": "npm install && node-prune && sls deploy"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "node-prune": "^1.0.2",
+    "serverless-bundle": "^5.2.0",
+    "serverless-deployment-bucket": "^1.5.1",
+    "serverless-offline": "^8.3.1",
+    "serve": "^13.0.2"
+  },
   "dependencies": {
-    "@strapi/strapi": "4.0.0",
-    "@strapi/plugin-users-permissions": "4.0.0",
     "@strapi/plugin-i18n": "4.0.0",
+    "@strapi/plugin-users-permissions": "4.0.0",
+    "@strapi/strapi": "4.0.0",
+    "serverless-http": "^2.7.0",
     "sqlite3": "5.0.2"
   },
   "author": {

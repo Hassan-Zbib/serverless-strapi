@@ -1,0 +1,54 @@
+service: serverless-strapi
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  profile: arcinaDev
+  region: us-west-2
+  stage: dev
+  stackName: ${self:service}-stack
+  apiName: ${self:service}-api
+  lambdaHashingVersion: 20201221 # force none future deprecated hash
+  deploymentBucket:
+    blockPublicAccess: true
+    skipPolicySetup: false
+    name: ${self:service}-${self:provider.stage}-${self:provider.region}-slsbucket # com.serverless.${self:provider.region}.deploys
+    maxPreviousDeploymentArtifacts: 5
+    versioning: false
+  logRetentionInDays: ${self:custom.vars.logRetentionInDays, 1}
+  environment:
+    ADMIN_JWT_SECRET: 9e0538f1-6585-4ffa-a690-053b5e13b958 # for future change for .env with a costume plugin
+
+package:
+  individually: false
+  excludeDevDependencies: true
+  exclude:
+    - ./**
+  include:
+    - node_modules/**
+    - api/**
+    - config/**
+    - extensions/**
+    - plugins/**
+    - package.json
+    - app.js
+
+functions:
+  api:
+    handler: app.handler
+    memorySize: 1024
+    timeout: 24
+    events:
+      - http:
+          path: /
+          method: ANY
+          cors: true
+      - http:
+          path: /{any+}
+          method: ANY
+          cors: true
+
+plugins:
+  - serverless-offline
+  - serverless-bundle  # webpack package deployment
+  - serverless-deployment-bucket
